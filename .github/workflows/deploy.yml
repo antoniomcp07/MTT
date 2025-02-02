@@ -3,49 +3,30 @@ name: Deploy Hugo Site to GitHub Pages
 on:
   push:
     branches:
-      - main  # Runs on push to main branch
+      - main  # Change this if your default branch is different
+  pull_request:
 
-  workflow_dispatch: # Allows manual triggering of the workflow
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          extended: true
-
-      - name: Build site
-        run: hugo --minify
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: List contents of public folder (Debugging)
-        run: ls -la public
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+    - name: Build Hugo Site
+      run: hugo --minify  # Builds the site (output will be in 'public/' folder)
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public  # Ensure Hugo outputs to this directory
+        publish_branch: main  # GitHub Pages branch
