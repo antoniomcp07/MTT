@@ -3,10 +3,8 @@ name: Deploy Hugo Site to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this if your default branch is different
-  pull_request:
-
-  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
+      - main
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   deploy:
@@ -16,17 +14,18 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Setup Hugo
+    - name: Install Hugo (Extended Version)
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
+        extended: true  # Ensure we get the extended version
 
     - name: Build Hugo Site
-      run: hugo --minify  # Builds the site (output will be in 'public/' folder)
+      run: hugo --minify
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public  # Ensure Hugo outputs to this directory
-        publish_branch: main  # GitHub Pages branch
+        publish_dir: ./public
+        publish_branch: gh-pages
