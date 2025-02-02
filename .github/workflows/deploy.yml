@@ -27,13 +27,13 @@ jobs:
           extended: true
 
       - name: Build site
-        run: hugo --minify  # Generates the site into ./public
+        run: hugo --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public  # ✅ Uploads only the built site
-          name: hugo-site  # ✅ This must match the name in download step
+          path: ./public
+          name: hugo-site
 
   deploy:
     needs: build
@@ -46,14 +46,14 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: hugo-site  # ✅ Ensure this matches the uploaded artifact name
-          path: public  # ✅ Extracts the artifact into ./public
+          name: hugo-site
+          path: public 
 
       - name: List contents of public folder (Debugging)
-        run: ls -la public  # ✅ Check if files are in the expected directory
+        run: ls -la public
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_path: public  # ✅ Explicitly set deploy directory
+          artifact_name: hugo-site
