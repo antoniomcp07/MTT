@@ -31,9 +31,6 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./public
-          name: hugo-site
 
   deploy:
     needs: build
@@ -45,9 +42,6 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
-        with:
-          name: hugo-site
-          path: public 
 
       - name: List contents of public folder (Debugging)
         run: ls -la public
@@ -55,5 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-        with:
-          artifact_name: artifact.tar
