@@ -56,4 +56,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name: public/artifact.tar
+          artifact_name: artifact.tar
