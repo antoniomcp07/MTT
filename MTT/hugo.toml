@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = "https://antoniomcp07.github.io/MTT/"
 languageCode = 'en-us'
 title = 'My New Hugo Site'
 [[module.imports]]
