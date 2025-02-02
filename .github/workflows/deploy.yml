@@ -49,12 +49,11 @@ jobs:
           name: hugo-site
           path: public 
 
-      - name: Extract artifact
-        run: tar -xvf public/artifact.tar -C public
-
       - name: List contents of public folder (Debugging)
         run: ls -la public
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          artifact_name: public/artifact.tar
