@@ -27,12 +27,14 @@ jobs:
           extended: true
 
       - name: Build site
-        run: hugo --minify
+        run: |
+          cd Hugo
+          hugo --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./Hugo/public
 
   deploy:
     needs: build
