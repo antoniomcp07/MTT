@@ -3,7 +3,7 @@ name: Deploy Hugo Site to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this if your default branch is different
+      - main  # Runs on push to main branch
 
   workflow_dispatch: # Allows manual triggering of the workflow
 
@@ -27,13 +27,13 @@ jobs:
           extended: true
 
       - name: Build site
-        run: hugo --minify
+        run: hugo --minify  # Generates the site into ./public
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
-          name: hugo-site
+          path: ./public  # ✅ Uploads only the built site
+          name: hugo-site  # ✅ This must match the name in download step
 
   deploy:
     needs: build
@@ -46,9 +46,14 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: hugo-site
-          path: ./public
+          name: hugo-site  # ✅ Ensure this matches the uploaded artifact name
+          path: public  # ✅ Extracts the artifact into ./public
+
+      - name: List contents of public folder (Debugging)
+        run: ls -la public  # ✅ Check if files are in the expected directory
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          artifact_path: public  # ✅ Explicitly set deploy directory
