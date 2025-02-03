@@ -2,7 +2,7 @@ name: Generate and Deploy Weekly Blog Post
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Runs every Monday at 09:00 UTC
+    - cron: '*/5 * * * *'  # Runs every Monday at 09:00 UTC
   workflow_dispatch:  # Allows manual trigger if needed
 
 jobs:
