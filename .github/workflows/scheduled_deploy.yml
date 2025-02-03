@@ -4,9 +4,6 @@ on:
   schedule:
     - cron: '*/10 * * * *'  # Runs every 5 minutes for testing
   workflow_dispatch:  # Allows manual trigger if needed
-  push:
-    branches:
-      - main
 
 jobs:
   generate-deploy:
